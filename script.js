@@ -34,19 +34,19 @@ class Widget {
     controlPanelContainer.classList.add('control');
 
     buttonStart.innerHTML = '<<<';
-    buttonStart.addEventListener('click',this.slideStartChange())
+    buttonStart.addEventListener('click',this.slideStartChange)
 
     buttonEnd.innerHTML = '>>>';
-    buttonEnd.addEventListener('click',this.slideEndChange())
+    buttonEnd.addEventListener('click',this.slideEndChange)
 
     buttonNext.innerHTML = '>';
-    buttonNext.addEventListener('click',this.slideNextChange())
+    buttonNext.addEventListener('click',this.slideNextChange)
 
     buttonPrev.innerHTML = '<';
-    buttonPrev.addEventListener('click', this.slidePrevChange())
+    buttonPrev.addEventListener('click', this.slidePrevChange)
 
     buttonToogle.innerHTML = 'Toggle';
-    buttonToogle.addEventListener('click', this.toogleChange())
+    buttonToogle.addEventListener('click', this.toogleChange)
 
     controlPanelContainer.appendChild(buttonToogle)
     controlButtons.appendChild(buttonStart);
@@ -57,31 +57,31 @@ class Widget {
     root.appendChild(controlPanelContainer);
   }
 
-  slideStartChange() {
+  slideStartChange = () => {
     this.currentSlide = 0;
     this.renderSlide();
   }
 
-  slideEndChange() {
+  slideEndChange = () => {
     this.currentSlide = this.slides.length - 1;
     this.renderSlide();
   }
 
-  slideNextChange() {
+  slideNextChange = () => {
     this.currentSlide === this.slides.length - 1 ?
       (this.currentSlide = 0) :
       this.currentSlide++;
     this.renderSlide();
   }
 
-  slidePrevChange() {
+  slidePrevChange = () => {
     this.currentSlide === 0 ?
       (this.currentSlide = this.slides.length - 1) :
       this.currentSlide--
     this.renderSlide();
   }
 
-  toogleChange() {
+  toogleChange = () => {
     const { description } = this.slides[this.currentSlide];
     const toggleElem = document.getElementById('toggle');
 
