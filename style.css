@@ -24,11 +24,11 @@ body {
   display: flex;
   flex-direction: column;
   height: 400px;
-  animation: fade .3s ease-in;
+  animation: fade .5s ease-in;
 }
 
 .slide img {
-  height: 60%;
+  height: 65%;
 }
 
 .description {
@@ -40,7 +40,7 @@ body {
 .title {
   padding: 0 10px;
   color: #FB6600;
-  font-size: 25px;
+  font-size: 19px;
   font-weight: 600;
 }
 
@@ -48,11 +48,21 @@ body {
   border: none;
   color: #FB6600;
   background: #fff;
+  top: -12px;
+  position: relative;
 }
 
 .control {
   margin-top: auto;
   padding: 10px;
+}
+
+.control-btn button {
+  padding: 6px 15px;
+  margin-right: 3px;
+  border-radius: 6px;
+  color: #FB6600;
+  background: #cfcfcf;
 }
 
 .info {

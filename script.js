@@ -8,7 +8,7 @@ class Widget {
 
   createSlide() {
     const { title, img, description } = this.slides[this.currentSlide];
-    const descText = this.slides[this.currentSlide].toggled ? description : `${description.slice(0, 70)}...`;
+    const descText = this.slides[this.currentSlide].toggled ? description : `${description.slice(0, 50)}...`;
     const template = `<div class="container">
                         <img src=${img} id="image" />
                         <div id="toggle" class="${this.slides[this.currentSlide].toggled ? 'info toggle' : 'toggle'}">
@@ -30,6 +30,7 @@ class Widget {
     const controlPanelContainer = document.createElement('div');
     const controlButtons = document.createElement('div');
 
+    controlButtons.classList.add('control-btn')
     buttonToogle.classList.add('toggle-btn');
     controlPanelContainer.classList.add('control');
 
@@ -92,7 +93,7 @@ class Widget {
       toggleElem.children[1].innerHTML = description;
     } else {
       toggleElem.classList.remove('info');
-      toggleElem.children[1].innerHTML = description.slice(0, 70);
+      toggleElem.children[1].innerHTML = description.slice(0, 50);
     }
   }
 
