@@ -47,6 +47,7 @@ body {
 .toggle-btn {
   border: none;
   color: #FB6600;
+  background: #fff;
 }
 
 .control {
