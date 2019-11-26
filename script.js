@@ -1,107 +1,158 @@
 class Widget {
-  constructor(){
-    this.slides = [
-      {
-        "title": "Time to Share: 6 for $3.99*",
-        "img": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640170/comp_plate_promo1_wsmolg.png",
-        "description": "Lorem ipsum dolor sit amet. consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exefcitalion ullamoo laboris nisi ut aliquip ex ea commodo oonsequat.",
-        "note": "* At vero eos et accusamus et iusto odo dtgntsslmos duclmus qui blandltlis praesentlum voluptatum delenrtl atque corruptl quos doQres et quas molestlas exceptun sint occaecatl cupidrtate non pro v dent, slmllique sunt In culpa qui otflcia deserunt mollrtia anlmi. id est la bo aim et dolorum tuga.",
-        "productUrl": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640170/comp_plate_promo1_wsmolg.png"
-      },
-      {
-        "title": "Rise 'n shine",
-        "img": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640171/comp_plate_promo2_nlqjfe.png",
-        "description": "Lorem ipsum dolor sit amet. consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exefcitalion ullamoo laboris nisi ut aliquip ex ea commodo oonsequat.",
-        "note": "* At vero eos et accusamus et iusto odo dtgntsslmos duclmus qui blandltlis praesentlum voluptatum delenrtl atque corruptl quos doQres et quas molestlas exceptun sint occaecatl cupidrtate non pro v dent, slmllique sunt In culpa qui otflcia deserunt mollrtia anlmi. id est la bo aim et dolorum tuga.",
-        "productUrl": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640171/comp_plate_promo2_nlqjfe.png"
-      },
-      {
-        "title": "PM Snackers: Brownie Bites",
-        "img": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640171/comp_plate_promo4_f87x7g.png",
-        "description": "Lorem ipsum dolor sit amet. consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exefcitalion ullamoo laboris nisi ut aliquip ex ea commodo oonsequat.",
-        "note": "* At vero eos et accusamus et iusto odo dtgntsslmos duclmus qui blandltlis praesentlum voluptatum delenrtl atque corruptl quos doQres et quas molestlas exceptun sint occaecatl cupidrtate non pro v dent, slmllique sunt In culpa qui otflcia deserunt mollrtia anlmi. id est la bo aim et dolorum tuga.",
-        "productUrl": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640171/comp_plate_promo4_f87x7g.png"
-      },
-      {
-        "title": "PM Snackers: Brownie Bites",
-        "img": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640171/comp_plate_promo3_wnp43x.png",
-        "description": "Lorem ipsum dolor sit amet. consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exefcitalion ullamoo laboris nisi ut aliquip ex ea commodo oonsequat.",
-        "note": "* At vero eos et accusamus et iusto odo dtgntsslmos duclmus qui blandltlis praesentlum voluptatum delenrtl atque corruptl quos doQres et quas molestlas exceptun sint occaecatl cupidrtate non pro v dent, slmllique sunt In culpa qui otflcia deserunt mollrtia anlmi. id est la bo aim et dolorum tuga.",
-        "productUrl": "https://res.cloudinary.com/dx4wkpab8/image/upload/v1573640171/comp_plate_promo4_f87x7g.png"
-      }
-    ];
+  constructor(mountPoint = 'root') {
+    this.slides = [];
     this.currentSlide = 0;
+    this.mountPoint = mountPoint;
+    this.apiURL = 'https://my-json-server.typicode.com/ilyalytvynov/ads-box-server/ads';
   }
 
   createSlide() {
     const { title, img, description } = this.slides[this.currentSlide];
-    const descText = this.slides[this.currentSlide].toggled ? description : `${description.slice(0, 20)}...`;
+    const descText = this.slides[this.currentSlide].toggled ? description : `${description.slice(0, 70)}...`;
     const template = `<div class="container">
-                      <img src=${img} />
-                      <div class="title">${title}<div>
-                      <div class="description">${descText}</div>
+                        <img src=${img} id="image" />
+                        <div id="toggle" class="${this.slides[this.currentSlide].toggled ? 'info toggle' : 'toggle'}">
+                          <div class="title">${title}</div>
+                          <div class="description">${descText}</div>
+                        </div>
                       </div>`;
 
     return template
   }
 
-  slideNextChange() {
-    this.currentSlide === this.slides.length - 1
-  ? (this.currentSlide = 0)
-  : this.currentSlide++
-
-    this.render();
-  }
-
-  slidePrevChange(){
-    this.currentSlide === 0
-  ? this.currentSlide = this.slides.length - 1
-  : this.currentSlide--
-
-    this.render();
-  }
-
-  toogleChange() {
-    this.slides[this.currentSlide].toggled = !this.slides[this.currentSlide].toggled;
-
-    this.render();
-  }
-
-  render(){
-    const slideElem = document.getElementById('slide')
-    const template = this.createSlide();
-    slideElem.innerHTML = template;
-  }
-
-  init() {
-    const root = document.getElementById('root');
-    const slide = document.createElement('div');
-    slide.setAttribute('id', 'slide');
-    const slideTemplate = this.createSlide();
-    slide.innerHTML = slideTemplate;
-    root.appendChild(slide)
+  createControlPanel() {
+    const root = document.getElementById(this.mountPoint);
+    const buttonStart = document.createElement('button');
+    const buttonEnd = document.createElement('button');
     const buttonNext = document.createElement('button');
+    const buttonPrev = document.createElement('button');
+    const buttonToogle = document.createElement('button');
+    const controlPanelContainer = document.createElement('div');
+    const controlButtons = document.createElement('div');
+
+    buttonToogle.classList.add('toggle-btn');
+    controlPanelContainer.classList.add('control');
+
+    buttonStart.innerHTML = '<<<';
+    buttonStart.addEventListener('click', () => {
+      this.slideStartChange();
+    })
+
+    buttonEnd.innerHTML = '>>>';
+    buttonEnd.addEventListener('click', () => {
+      this.slideEndChange();
+    })
+
     buttonNext.innerHTML = '>';
     buttonNext.addEventListener('click', (e) => {
       this.slideNextChange();
     })
-    const buttonPrev = document.createElement('button');
+
     buttonPrev.innerHTML = '<';
     buttonPrev.addEventListener('click', (e) => {
       this.slidePrevChange();
     })
-    const buttonToogle = document.createElement('button');
+
     buttonToogle.innerHTML = 'Toggle';
     buttonToogle.addEventListener('click', () => {
       this.toogleChange()
     })
-    root.appendChild(buttonToogle)
-    root.appendChild(buttonPrev);
-    root.appendChild(buttonNext);
 
+    controlPanelContainer.appendChild(buttonToogle)
+    controlButtons.appendChild(buttonStart);
+    controlButtons.appendChild(buttonPrev);
+    controlButtons.appendChild(buttonNext);
+    controlButtons.appendChild(buttonEnd);
+    controlPanelContainer.appendChild(controlButtons);
+    root.appendChild(controlPanelContainer);
+  }
+
+  slideStartChange() {
+    this.currentSlide = 0;
+    this.renderSlide();
+  }
+
+  slideEndChange() {
+    this.currentSlide = this.slides.length - 1;
+    this.renderSlide();
+  }
+
+  slideNextChange() {
+    this.currentSlide === this.slides.length - 1 ?
+      (this.currentSlide = 0) :
+      this.currentSlide++;
+    this.renderSlide();
+  }
+
+  slidePrevChange() {
+    this.currentSlide === 0 ?
+      (this.currentSlide = this.slides.length - 1) :
+      this.currentSlide--
+    this.renderSlide();
+  }
+
+  toogleChange() {
+    const { description } = this.slides[this.currentSlide];
+    const toggleElem = document.getElementById('toggle');
+
+    this.slides[this.currentSlide].toggled = !this.slides[this.currentSlide].toggled;
+
+    if (this.slides[this.currentSlide].toggled) {
+      toggleElem.classList.add('info');
+      toggleElem.children[1].innerHTML = description;
+    } else {
+      toggleElem.classList.remove('info');
+      toggleElem.children[1].innerHTML = description.slice(0, 70);
+    }
+  }
+
+  fetchData() {
+    return fetch(this.apiURL)
+      .then(res=> res.json())
+      .then(data => {
+        this.slides = [...data];
+      })
+  }
+
+  renderSlide() {
+    const slideElem = document.getElementById('slide');
+    const template = this.createSlide();
+    slideElem.innerHTML = template;
+  }
+
+  renderLoading() {
+    const root = document.getElementById(this.mountPoint);
+    root.setAttribute('id', 'root');
+    const loadingTemplate = document.createElement('div');
+    loadingTemplate.classList.add('loader');
+    loadingTemplate.innerHTML = '<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+    root.appendChild(loadingTemplate);
+  }
+
+  initWidget() {
+    const root = document.getElementById(this.mountPoint);
+    root.setAttribute('id', 'root');
+    root.innerHTML = '';
+    const slide = document.createElement('div');
+    const slideTemplate = this.createSlide();
+    slide.setAttribute('id', 'slide');
+    slide.classList.add('slide');
+    slide.innerHTML = slideTemplate;
+    root.appendChild(slide);
+    this.createControlPanel()
+  }
+
+  init() {
+    this.renderLoading();
+    this.fetchData()
+      .then(() => {
+        if(this.slides.length > 0){
+          this.initWidget();
+        }
+      })
   }
 }
 
-
-const widget = new Widget();
+const widget = new Widget('root');
 widget.init();
+
