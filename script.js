@@ -34,29 +34,19 @@ class Widget {
     controlPanelContainer.classList.add('control');
 
     buttonStart.innerHTML = '<<<';
-    buttonStart.addEventListener('click', () => {
-      this.slideStartChange();
-    })
+    buttonStart.addEventListener('click',this.slideStartChange())
 
     buttonEnd.innerHTML = '>>>';
-    buttonEnd.addEventListener('click', () => {
-      this.slideEndChange();
-    })
+    buttonEnd.addEventListener('click',this.slideEndChange())
 
     buttonNext.innerHTML = '>';
-    buttonNext.addEventListener('click', (e) => {
-      this.slideNextChange();
-    })
+    buttonNext.addEventListener('click',this.slideNextChange())
 
     buttonPrev.innerHTML = '<';
-    buttonPrev.addEventListener('click', (e) => {
-      this.slidePrevChange();
-    })
+    buttonPrev.addEventListener('click', this.slidePrevChange())
 
     buttonToogle.innerHTML = 'Toggle';
-    buttonToogle.addEventListener('click', () => {
-      this.toogleChange()
-    })
+    buttonToogle.addEventListener('click', this.toogleChange())
 
     controlPanelContainer.appendChild(buttonToogle)
     controlButtons.appendChild(buttonStart);
