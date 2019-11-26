@@ -5,3 +5,5 @@ To run widget create new class instance, pass into element id and run init() met
 const widget = new Widget(id)
 widget.init()
 ```
+
+[Demo](https://csergey8.github.io/widget/)
